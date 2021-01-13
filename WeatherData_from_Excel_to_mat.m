@@ -16,6 +16,34 @@
 % Samuli Siltanen January 2021
 
 
+
+%% Data from 2015
+
+% Read in data and pre-process it by taking daily averages
+w04orig = xlsread('data/201504_KumpulaLong2.xlsx');
+w04orig = w04orig(1:end-1,:);
+[row,col] = size(w04orig);
+w04 = zeros(row/24,col);
+for iii = 1:row/24
+   w04(iii,:) = mean(w04orig((iii-1)*24+[1:24],:)); 
+end
+%
+w07orig = xlsread('data/201507_KumpulaLong2.xlsx');
+w07orig = w07orig(1:end-1,:);
+[row,col] = size(w07orig);
+% Replace one missing measurement by average of neighbor measurements
+w07orig(683,6) = (w07orig(682,6)+w07orig(684,6))/2;
+w07 = zeros(row/24,col);
+for iii = 1:row/24
+   w07(iii,:) = mean(w07orig((iii-1)*24+[1:24],:)); 
+end
+
+% Save to file
+save data/weather2015 w04 w07
+
+
+
+
 %% Data from 2016
 
 % Read in data and pre-process it by taking daily averages
