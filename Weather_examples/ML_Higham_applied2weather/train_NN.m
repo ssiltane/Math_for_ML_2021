@@ -7,7 +7,7 @@ function train_NN
 %   Visualize results
 %
 % C F Higham and D J Higham, Aug 2017
-%
+
 %%%%%%% DATA %%%%%%%%%%%
 % xcoords, ycoords, targets
 load  Highamdata  x1 x2 y x1MIN x1MAX x2MIN x2MAX Nweather
@@ -51,8 +51,7 @@ b4 = 0.7*randn(2,1);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Forward and Back propagate
 % Pick a training point at random
-%eta = 0.05;
-eta = 0.03;
+eta = 0.025;
 Niter = 5000000;
 tic
 savecost = zeros(Niter,1);
@@ -131,7 +130,7 @@ semilogy([1:1e4:Niter],savecost(1:1e4:Niter),'b-','LineWidth',2)
 xlabel('Iteration Number')
 ylabel('Value of cost function')
 set(gca,'FontWeight','Bold','FontSize',18)
-print -dpng pic_cost.png
+%print -dpng pic_cost.png
 
 %%%%%%%%%%% Display shaded and unshaded regions
 N = 500;
@@ -184,7 +183,7 @@ a2.FontSize = 16;
 xlim([0,1])
 ylim([0,1])
 
-print -dpng pic_bdy_bp.png
+%print -dpng pic_bdy_bp.png
 
     function costval = cost(W2,W3,W4,b2,b3,b4)
         
