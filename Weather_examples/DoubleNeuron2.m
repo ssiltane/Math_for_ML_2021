@@ -1,14 +1,14 @@
 % Simple double-neuron NN
 %
 % Arguments:
-% x   mean temperature of a day (degrees Celsius)
-% y   relative humidity (hPa)
+% x   mean air pressure of a day (hPa)
+% y   mean temperature of a day (degrees Celsius)
 %
 % Returns:
 % 0   for July day
 % 1   for April day
 %
-% Samuli Siltanen Sep 2020
+% Samuli Siltanen Jan 2021
 
 function res = DoubleNeuron2(x,y)
 

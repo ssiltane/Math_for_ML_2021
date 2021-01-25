@@ -56,7 +56,7 @@ w07y19 = w07;
 w10y19 = w10;
 
 
-%% Picture 13, April and July temperatures for a hand-picked set of days
+%% Picture 13, classification of April and July days by neural network based on temperature and air pressure
 
 % Load precomputed neural net weights and biases. 
 load data/NN_parameters W2 b2 W3 b3 W4 b4
