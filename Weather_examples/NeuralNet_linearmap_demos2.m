@@ -82,7 +82,7 @@ set(gca,'xtick',[0:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[0:.1:1],'fontsize',tickfsize)
 axis([0 1 0 1])
 axis square
-
+title('Original data points','fontsize',fsize)
 
 %% Picture 2, apply weight matrix and bias of first hidden layer
 
@@ -122,6 +122,7 @@ for iii = 1:len
 
 end
 axis equal
+title('Data points in layer 2, without activation','fontsize',fsize)
 
 
 %% Picture 3, apply activation function
@@ -143,6 +144,7 @@ for iii = 1:len
 
 end
 axis equal
+title('Data points in layer 2, with activation','fontsize',fsize)
 
 
 
