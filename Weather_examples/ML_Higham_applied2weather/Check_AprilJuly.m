@@ -4,7 +4,7 @@
 
 % Load precomputed data
 load Highamdata x2 x1 y Nweather
-load NN_parameters2 W2 b2 W3 b3 W4 b4
+load NN_parameters W2 b2 W3 b3 W4 b4
 
 % Initialize results
 results_April = zeros(1,2);

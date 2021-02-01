@@ -1,58 +1,21 @@
-% Classify weather data from various months measured in Kumpula.
+% Classify weather data from various months measured in Kumpula. Especially
+% study how a rotation matrix can be used to transform data into an easily
+% classified form. 
 %
-% Column 1: Cloud amount	1/8
-% Column 2: Pressure (msl)	hPa
-% Column 3: Relative humidity	%
-% Column 4: Precipitation intensity	mm/h
-% Column 5: Snow depth	cm
-% Column 6: Air temperature	degC
-% Column 7: Dew-point temperature	degC
-% Column 8: Horizontal visibility	m
-% Column 9: Wind direction	deg
-% Column 10: Gust speed	m/s
-% Column 11: Wind speed	m/s
-%
-% Samuli Siltanen January 2021
+% Samuli Siltanen February 2021
 
 % Graphical parameters
 color_summer = [200 0 0]/255;
-color_summer_light = [245 226 226]/255;
 color_fall   = [255 124 45]/255;
 color_winter = [0 0 255]/255;
 color_spring = [20 200 185]/255;
-color_spring_light = [217 255 235]/255;
-color_line = [.5 .5 .5];
-gridline_color = [.6 .6 .6];
-gridline_width = .5;
 msize = 6;
-msize2 = 8;
 fsize = 26;
-fsize2 = 12;
 tickfsize = 16;
-separ = .2;
-lwidth = 1;
-lwidth2 = .5;
 
-% Interval between January and July temperatures
-a = 6;
-b = 8;
-
-load data/weather2015 w04 w07
-w04y15 = w04;
-w07y15 = w07;
-
-load data/weather2016 w01 w04 w07 w10
-w01y16 = w01;
-w04y16 = w04;
-w07y16 = w07;
-w10y16 = w10;
-
-load data/weather2017 w01 w04 w07 w10
-w01y17 = w01;
-w04y17 = w04;
-w07y17 = w07;
-w10y17 = w10;
-
+% Load weather data
+% Column 2: Pressure (msl)	hPa
+% Column 6: Air temperature	degC
 load data/weather2019 w01 w04 w07 w10
 w01y19 = w01;
 w04y19 = w04;
@@ -62,6 +25,7 @@ w10y19 = w10;
 % First data coordinate is average air pressure. The 30 first components
 % are from April, and components 31-60 are from July.
 x1 = [w04y19(:,2);w07y19(:,2)];
+x1(59) = mean([x1(58),x1(60)]); % Remove one not-a-number (NaN) value from the data
 
 % Second data coordinate is average temperature. The 30 first components
 % are from April, and components 31-60 are from July.
@@ -77,7 +41,12 @@ x2 = x2-x2MIN;
 x2 = x2/(x2MAX-x2MIN);
 
 
-%% Picture 1, April and July normalized temperatures and air pressures in 2019 
+%% Demo 1, April and July normalized temperatures and air pressures in 2019 
+
+% The conclusion is that the data is almost completely classified by a
+% diagonal line connecting the origin and the point (1,1). Namely, the July
+% days are above that diagonal line and all but one April days are below
+% the line. 
 
 figure(1)
 clf
@@ -94,23 +63,34 @@ set(gca,'xtick',[0:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[0:.1:1],'fontsize',tickfsize)
 axis([0 1 0 1])
 axis square
+title('Original data points','fontsize',fsize)
 
 
-%% Picture 2, rotate the data 45 degrees
+%% Demo 2, rotate the data 45 degrees
 
-% Rotation angle
+% In this demo number 2 we rotate the data points using a rotation matrix.
+% After rotation the data is almost completely classified by the vertical
+% coordinate axis. Namely, the July days all have a negative horizontal 
+% coordinate and all but one April days have a positive horizontal 
+% coordinate. 
+
+% Rotation angle is 45 degrees counter-clockwise
 theta = pi/4;
 
-% Construct rotation matrix
+% Construct rotation matrix (learn this formula by heart!)
 A = [[cos(theta) -sin(theta)];[sin(theta) cos(theta)]];
 
 % Re-arrange the data so that each column of a 2x60 matrix has the
 % x1-coordinate of a data point in the first row and x2-coordinate in the
-% second row
+% second row. (The notation (:) drops any vector or matrix into a vertical
+% vector. The transpose ' contains complex conjugation, which is not
+% relevant here since our data is real-valued, but nevertheless I like to 
+% use .' for transpose when I do not want complex conjugation. This is a
+% habit of mine for avoiding hard-to-detect bugs in Matlab coding. )
 tmp = [x1(:).';x2(:).'];
 
 % Multiply by rotation matrix. Because of matrix algebra rules, all data
-% points get rotated. 
+% points get rotated since they are organized as columns. 
 Ax = A*tmp;
 
 % Transpose the result so that again first column is for x1-coordinates and
@@ -142,8 +122,11 @@ axis([-.6 .6 0 1.1])
 
 
 
-%% Picture 3, apply relu
+%% Demo 3, apply relu to all the coordinates of the rotated data
 
+% The result of applying relu is that all July points (and one April point)
+% are located on the vertical axis. This is because all negative horizontal
+% coordinates were replaced by zero. 
 
 % Plot the data
 figure(3)
@@ -166,8 +149,14 @@ axis([-.6 .6 0 1.1])
 
 
 
-%% Picture 4, project to horizontal axis
+%% Demo 4, project to horizontal axis
 
+% Since the data is classified by the horizontal coordinate, we might as
+% well apply "dimension reduction" simply by replacing the vertical
+% coordinates by zeros. After all, they are not relevant for the
+% classification. Now all the data points are scattered on the horizontal
+% axis, with July days (and one April day) located on the negative
+% half-line. 
 
 % Plot the data
 figure(4)
@@ -190,7 +179,13 @@ axis([-.6 .6 -.3 .3])
 
 
 
-%% Picture 5, project to horizontal axis and apply relu
+%% Demo 5, project to horizontal axis and apply relu
+
+% We can build on demo 4 by applying relu to the coordinates. Then we can 
+% use the following classification rule: "if a rotated and relu-mapped data
+% point has horizontal coordinate zero, then it is a July day." 
+% This rule classifies all July days in our data set correctly
+% (and one of the April days incorrectly). 
 
 
 % Plot the data
@@ -214,7 +209,10 @@ axis([-.6 .6 -.3 .3])
 
 
 
-%% Picture 6, same as picture, but using a neuron
+%% Demo 6. Exactly the same process as in demo 5, but using a neuron
+
+% We encode the classification rule of Demo 5 into a single computational
+% neuron implemented in routine SingleNeuron.m.
 
 NNresult = zeros(size(x1));
 for iii = 1:60
