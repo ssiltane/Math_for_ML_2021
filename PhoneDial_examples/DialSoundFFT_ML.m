@@ -44,20 +44,20 @@ axis square
 xlim([1 size(Fs3mat,1)])
 
 
-%% Train Support Vector Machine (SVM) with sound data
+%% Train Support Vector Machine (SVM) with *sound* data (bad idea)
 
 % Use 2*Ntrain samples of the data to train an SVM
-Ntrain = 12;
-X = [(s3mat(:,1:Ntrain)).';(s7mat(:,1:Ntrain)).'];
-Y = [3*ones(Ntrain,1);7*ones(Ntrain,1)];
+Ntrain1 = 12;
+X = [(s3mat(:,1:Ntrain1)).';(s7mat(:,1:Ntrain1)).'];
+Y = [3*ones(Ntrain1,1);7*ones(Ntrain1,1)];
 svm1 = fitcsvm(X,Y);
 
 % See how the svm performs with the remaining samples
-predict(svm1,(s3mat(:,(Ntrain+1):end)).') 
-predict(svm1,(s7mat(:,(Ntrain+1):end)).') 
+predict(svm1,(s3mat(:,(Ntrain1+1):end)).') 
+predict(svm1,(s7mat(:,(Ntrain1+1):end)).') 
 
 
-%% Train Support Vector Machine (SVM) with FFT data
+%% Train Support Vector Machine (SVM) with *FFT* data (good idea)
 
 % Use 2*Ntrain samples of the data to train an SVM
 Ntrain = 1;
