@@ -5,7 +5,7 @@
 %% Put data snippets into matrices
 
 % Load precomputed data
-load data/twosounds s3 s7 fs
+load data/twosounds s3 s7 
 len = length(s3);
 
 % Initialize sample matrices
@@ -34,7 +34,6 @@ ind2 = round(.55*size(Fs3mat,1));
 Fs3mat = Fs3mat(ind1:ind2,:);
 Fs7mat = Fs7mat(ind1:ind2,:);
 
-
 % Plot
 figure(30)
 clf
@@ -45,13 +44,49 @@ axis square
 xlim([1 size(Fs3mat,1)])
 
 
-%% Calculate svm
+%% Train Support Vector Machine (SVM) with sound data
 
-% Use 20 samples of the data to train an SVM
-X = [abs(Fs3mat(:,1:10)).';abs(Fs7mat(:,1:10)).'];
-Y = [3*ones(10,1);7*ones(10,1)];
+% Use 2*Ntrain samples of the data to train an SVM
+Ntrain = 12;
+X = [(s3mat(:,1:Ntrain)).';(s7mat(:,1:Ntrain)).'];
+Y = [3*ones(Ntrain,1);7*ones(Ntrain,1)];
+svm1 = fitcsvm(X,Y);
+
+% See how the svm performs with the remaining samples
+predict(svm1,(s3mat(:,(Ntrain+1):end)).') 
+predict(svm1,(s7mat(:,(Ntrain+1):end)).') 
+
+
+%% Train Support Vector Machine (SVM) with FFT data
+
+% Use 2*Ntrain samples of the data to train an SVM
+Ntrain = 1;
+X = [abs(Fs3mat(:,1:Ntrain)).';abs(Fs7mat(:,1:Ntrain)).'];
+Y = [3*ones(Ntrain,1);7*ones(Ntrain,1)];
 svm = fitcsvm(X,Y);
 
-% See how the svm performs with the remaining 8 samples
-predict(svm,abs(Fs3mat(:,11:end)).') 
-predict(svm,abs(Fs7mat(:,11:end)).') 
+% See how the svm performs with the remaining samples
+predict(svm,abs(Fs3mat(:,(Ntrain+1):end)).') 
+predict(svm,abs(Fs7mat(:,(Ntrain+1):end)).') 
+
+
+
+%% Test the SVM with sound data recorded with a different instrument
+
+% Load the sounds
+load twosoundsB s3 s7 
+s3B = s3(1:N);
+s7B = s7(1:N);
+
+% Fast Fourier transform applied to columns
+Fs3B = fftshift(fft(s3B));
+Fs7B = fftshift(fft(s7B));
+
+% Crop the FFTs
+Fs3B = Fs3B(ind1:ind2);
+Fs7B = Fs7B(ind1:ind2);
+
+% See how the svm performs with the remaining samples
+predict(svm,abs(Fs3B)) 
+predict(svm,abs(Fs7B)) 
+

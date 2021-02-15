@@ -11,15 +11,21 @@ figure(1)
 clf
 plot(s)
 
-
 % Calculate the fft
 fs = fft(s);
 fs = fftshift(fs);
+
+% Filter the speech signal
 modfs = fs;
 n = (length(s)-1)/2;
 tmp = [-n:n];
-modfs(abs(tmp)<n/20) = 0;
+% Low-pass filter
+modfs(abs(tmp)>n/20) = 0;
+% High-pass filter
+%modfs(abs(tmp)<n/20) = 0;
 s2 = real(ifft(fftshift(modfs)));
+
+% Take a look
 figure(1)
 clf
 subplot(2,1,1)

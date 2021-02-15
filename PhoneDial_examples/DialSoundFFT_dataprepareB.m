@@ -28,4 +28,5 @@ clf
 plot(abs(fs3))
 xlim([1 length(s3)])
 
-
+% Save the sounds to file
+save twosoundsB s3 s7 sf

@@ -3,21 +3,21 @@
 % Samuli Siltanen Feb 2021
 
 % Read in the sounds and crop them
-[s3,fs] = audioread('data/Numero3.m4a');
+[s3,sf] = audioread('data/Numero3.m4a');
 figure(3)
 clf
 plot(s3)
 s3 = s3(130000:160000);
-[s7,fs] = audioread('data/Numero7.m4a');
+[s7,sf] = audioread('data/Numero7.m4a');
 figure(7)
 clf
 plot(s7)
 s7 = s7(130000:160000);
 
 % Listen to the sounds
-sound(s3,fs)
+sound(s3,sf)
 pause(1)
-sound(s7,fs)
+sound(s7,sf)
 
 
 %% Calculate FFT and plot
@@ -43,4 +43,4 @@ xlim([1 length(Fs3)])
 
 %% Save results to file
 
-save data/twosounds s3 s7 fs
+save data/twosounds s3 s7 sf
