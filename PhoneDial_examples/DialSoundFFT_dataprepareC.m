@@ -3,39 +3,45 @@
 % Samuli Siltanen Feb 2021
 
 % Read in the sounds and crop them
-[s,fs] = audioread('data/Numerot1234567890.WAV');
+[s,sf] = audioread('data/Numerot1234567890.WAV');
+
+% Plot the signal
 figure(1)
 clf
 plot(s)
 
+% Pick out the signals
+s1 = s(160000+[1:40000]);
+s2 = s(245000+[1:40000]);
+s3 = s(326000+[1:40000]);
+s4 = s(426000+[1:40000]);
+s5 = s(510000+[1:40000]);
+s6 = s(600000+[1:40000]);
+s7 = s(685000+[1:40000]);
+s8 = s(769000+[1:40000]);
+s9 = s(854000+[1:40000]);
+s0 = s(943000+[1:40000]);
 
 % Listen to the sounds
-% sound(s3,fs)
-% pause(1)
-% sound(s7,fs)
+sound(s1,sf)
+pause(1)
+sound(s2,sf)
+pause(1)
+sound(s3,sf)
+pause(1)
+sound(s4,sf)
+pause(1)
+sound(s5,sf)
+pause(1)
+sound(s6,sf)
+pause(1)
+sound(s7,sf)
+pause(1)
+sound(s8,sf)
+pause(1)
+sound(s9,sf)
+pause(1)
+sound(s0,sf)
 
-
-%% Calculate FFT and plot
-
-% % Calculate FFT
-% Fs3 = fftshift(fft(s3));
-% Fs7 = fftshift(fft(s7));
-% 
-% % Crop the FFTs
-% ind1 = round(.45*length(Fs3));
-% ind2 = round(.55*length(Fs3));
-% Fs3 = Fs3(ind1:ind2);
-% Fs7 = Fs7(ind1:ind2);
-% 
-% % Plot
-% figure(30)
-% clf
-% plot(abs(Fs3),'r')
-% hold on
-% plot(abs(Fs7),'b')
-% axis square
-% xlim([1 length(Fs3)])
-
-%% Save results to file
-
-%save data/sounds 
+% Save the sounds to file
+save tensounds s1 s2 s3 s4 s5 s6 s7 s8 s9 s0 sf
