@@ -7,11 +7,11 @@ fsize = 16;
 msize = 20;
 msize2 = 10;
 
-% Load data. Note that all the 10 data vectos have the same length
+% Load data that was prepared in the routine DialSoundFFT_dataprepareC.m
 load data/tensounds_matrices s1mat s2mat s3mat s4mat s5mat s6mat s7mat s8mat s9mat s0mat sf N K
 
 % Build a matrix containing samples of training data as columns
-Ntrain = 5;
+Ntrain = 5; % How many samples of each dial tone to use
 X = [s1mat(:,1:Ntrain),s2mat(:,1:Ntrain),s3mat(:,1:Ntrain),s4mat(:,1:Ntrain),s5mat(:,1:Ntrain),s6mat(:,1:Ntrain),s7mat(:,1:Ntrain),s8mat(:,1:Ntrain),s9mat(:,1:Ntrain),s0mat(:,1:Ntrain)];
 
 % Build a big matrix containing samples of all the data as columns
@@ -35,17 +35,30 @@ FXall = FXall(ind1:ind2,:);
 
 % Take absolute value of the complex-valued FFTs
 FX = abs(FX);
+len = size(FX,1);
 FXall = abs(FXall);
 
 % Look at the FFTs. Note the seven spike locations at the frequencies used
 % in the dial tone system (see https://onlinetonegenerator.com/dtmf.html)
 figure(1)
 clf
-plot(FX(:,1:Ntrain),'r')
-hold on
-plot(FX(:,Ntrain+[1:Ntrain]),'b')
-plot(FX(:,2*Ntrain+[1:Ntrain]),'k')
-plot(FX(:,3*Ntrain+[1:Ntrain]),'g')
+for iii = 1:10
+    subplot(10,1,iii)
+    plot(FX(:,(iii-1)*Ntrain+[1:Ntrain]),'r')
+    xlim([1 len])
+    set(gca,'xticklabel',{})
+    set(gca,'yticklabel',{})
+    box off
+    pbaspect([8 1 1])
+end
+
+% figure(2)
+% clf
+% plot(FX(:,1:Ntrain),'r')
+% hold on
+% plot(FX(:,Ntrain+[1:Ntrain]),'b')
+% plot(FX(:,2*Ntrain+[1:Ntrain]),'k')
+% plot(FX(:,3*Ntrain+[1:Ntrain]),'g')
 
 
 %% Compute Principal Component Analysis with and without normalization
@@ -101,8 +114,6 @@ set(p8,'color',[.3 .1 .8])
 p9 = plot3(tmp1(1,9*K+[1:K]),tmp1(2,9*K+[1:K]),tmp1(3,9*K+[1:K]),'cv','markersize',msize2);
 set(p9,'color',[.6 .1 .1])
 title('Three dominant PCA dimensions, data not normalized','fontsize',fsize)
-
-
 
 % Pick three most dominant eigenvectors from normalized PCA
 B2 = V2(:,(end-2):end);

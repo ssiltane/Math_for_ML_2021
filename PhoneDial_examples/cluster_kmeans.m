@@ -1,4 +1,4 @@
-% Clustering the ten dial tone sounds using the k-means algorithm
+% Clustering the ten dial tone sounds using the k-means algorithm.
 %
 % Samuli Siltanen Feb 2021
 
@@ -35,7 +35,7 @@ FXall = FXall(ind1:ind2,:);
 FX = abs(FX);
 FXall = abs(FXall);
 
-%% Test kmeans
+%% Test kmeans without PCA
 
 % First, let's try to cluster the sound sample data with kmeans. We expect
 % this to fail. The columns of the displayed matrix "result1" should belong 
@@ -47,7 +47,8 @@ disp(result1)
 
 % Second, let's cluster the Fourier transformed and cropped samples. This
 % goes right most of the time, seen as constant columns in the matrix
-% result2.
+% result2. Try running this many times, and you see that sometimes k-means
+% fails in some of the columns. 
 [clusters_FFT,centers] = kmeans(FX.',10);
 result2 = reshape(clusters_FFT,[Ntrain,10]);
 disp(result2)
@@ -71,3 +72,6 @@ for iii = 1:(K*10)
     result3(iii) = index;
 end
 disp(result3)
+
+
+

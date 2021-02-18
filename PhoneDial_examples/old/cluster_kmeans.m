@@ -35,7 +35,7 @@ FXall = FXall(ind1:ind2,:);
 FX = abs(FX);
 FXall = abs(FXall);
 
-%% Test kmeans
+%% Test kmeans without PCA
 
 % First, let's try to cluster the sound sample data with kmeans. We expect
 % this to fail. The columns of the displayed matrix "result1" should belong 
@@ -47,13 +47,15 @@ disp(result1)
 
 % Second, let's cluster the Fourier transformed and cropped samples. This
 % goes right most of the time, seen as constant columns in the matrix
-% result2.
+% result2. Try running this many times, and you see that sometimes k-means
+% fails in some of the columns. 
 [clusters_FFT,centers] = kmeans(FX.',10);
 result2 = reshape(clusters_FFT,[Ntrain,10]);
 disp(result2)
 
 % Third, let's see how well the clustering generalizes to data points not
-% used in the kmeans algorithm. 
+% used in the kmeans algorithm. If the clustering is correct, the columns
+% of matrix result3 are constant. 
 result3 = -1*ones(K,10);
 for iii = 1:(K*10)
     % Take one sample at a time
@@ -62,9 +64,69 @@ for iii = 1:(K*10)
     % Check which cluster center is the closest
     distvec = zeros(1,10);
     for jjj=1:10
-          distvec(jjj) = centers-repmat(curr_sample(:).',10,1);
-
+          distvec(jjj) = norm(centers(jjj,:)-curr_sample(:).');
+    end
+    index = min(find(distvec==min(distvec)));
     
-    % record the result
-    result3(iii) = double(index);
+    % Record the result
+    result3(iii) = index;
 end
+disp(result3)
+
+
+
+
+%% Test k-means combined with PCA
+
+% Normalize training data so that it becomes zero-mean and unit-variance
+dataMEAN = mean(FX.').';
+FX2 = FX-repmat(dataMEAN,1,size(FX,2));
+dataSTD = std(FX2.').';
+FX2 = FX2./repmat(dataSTD,1,size(FX2,2));
+
+% Calculate the eigenvalues and eigenvectors of the normalized data
+% covariance matrix S2
+S2 = FX2*FX2.';
+S2 = S2/size(FX2,2);
+[V2,D2] = eig(S2);
+
+% Pick some of the most dominant eigenvectors from normalized PCA
+Ndominant = 10;
+B2 = V2(:,(end-(Ndominant-1)):end);
+
+% Project the normalized data onto the subspace spanned by the dominant eigenvectors
+tmp1 = B2.'*FX2;
+
+% Let's cluster PCA-reduced samples. 
+[clusters_FFT,centers] = kmeans(tmp1.',10);
+result4 = reshape(clusters_FFT,[Ntrain,10]);
+disp(result4)
+
+%% Let's see how well the clustering generalizes
+
+% If the clustering is correct, the columns of matrix result3 are constant.
+
+% Normalize the full data matrix, so we can test how PCA maps data vectors
+% that were not used in the computation of the principal components
+FXall2 = FXall-repmat(dataMEAN,1,size(FXall,2));
+FXall2 = FXall2./repmat(dataSTD,1,size(FXall2,2));
+
+% Project the normalized data onto the subspace spanned by the dominant eigenvectors
+tmp2 = B2.'*FXall2;
+
+result3 = -1*ones(K,10);
+for iii = 1:(K*10)
+    % Take one sample at a time
+    curr_sample = FXall(:,iii); 
+   
+    % Check which cluster center is the closest
+    distvec = zeros(1,10);
+    for jjj=1:10
+          distvec(jjj) = norm(centers(jjj,:)-curr_sample(:).');
+    end
+    index = min(find(distvec==min(distvec)));
+    
+    % Record the result
+    result3(iii) = index;
+end
+disp(result3)

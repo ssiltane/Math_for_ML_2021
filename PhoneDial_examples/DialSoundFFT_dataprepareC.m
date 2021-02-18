@@ -1,8 +1,8 @@
-% FFT analysis of phone number dial sounds
+% Preparation of phone number dial tone sounds
 %
 % Samuli Siltanen Feb 2021
 
-% Read in the sounds and crop them
+% Read in the file with ten dial tone sounds
 [s,sf] = audioread('data/Numerot1234567890.WAV');
 
 % Plot the signal
