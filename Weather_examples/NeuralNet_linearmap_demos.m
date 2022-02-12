@@ -64,6 +64,8 @@ set(gca,'ytick',[0:.1:1],'fontsize',tickfsize)
 axis([0 1 0 1])
 axis square
 title('Original data points','fontsize',fsize)
+xlabel('pressure (normalized)')
+ylabel('temperature (normalized)')
 
 
 %% Demo 2, rotate the data 45 degrees
@@ -115,6 +117,7 @@ set(p1,'markerfacecolor',color_summer)
 %
 set(gca,'xtick',[-1:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[0:.1:1.2],'fontsize',tickfsize)
+title('Rotated data')
 axis equal
 axis([-.6 .6 0 1.1])
 
@@ -142,6 +145,7 @@ set(p1,'markerfacecolor',color_summer)
 %
 set(gca,'xtick',[-1:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[0:.1:1.2],'fontsize',tickfsize)
+title('Relu=max(0,x_i) applied to data')
 axis equal
 axis([-.6 .6 0 1.1])
 
@@ -173,6 +177,7 @@ set(p1,'markerfacecolor',color_summer)
 set(gca,'xtick',[-1:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[-1:.1:1.2],'fontsize',tickfsize)
 axis equal
+title('Projected data')
 axis([-.6 .6 -.3 .3])
 
 
@@ -203,6 +208,7 @@ set(p1,'markerfacecolor',color_summer)
 set(gca,'xtick',[-1:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[-1:.1:1.2],'fontsize',tickfsize)
 axis equal
+title('Relu applied to projected data')
 axis([-.6 .6 -.3 .3])
 
 
@@ -233,6 +239,7 @@ set(p1,'markerfacecolor',color_summer)
 %
 set(gca,'xtick',[-1:.1:1],'fontsize',tickfsize)
 set(gca,'ytick',[-1:.1:1.2],'fontsize',tickfsize)
+title('Same but using a neuron')
 axis equal
 axis([-.6 .6 -.3 .3])
 

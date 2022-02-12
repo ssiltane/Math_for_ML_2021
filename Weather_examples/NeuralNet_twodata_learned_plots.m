@@ -131,10 +131,10 @@ p1 = plot(x1(57),x2(57),'bd','markersize',msize2);
 set(p1,'color',color_spring)
 set(p1,'markerfacecolor',color_spring)
 %
-title('Huhti- ja heinäkuun päivät 2015, 2016, 2017 ja 2019','fontsize',fsize2)
-t3 = text(cvec(1)-1.3*cstep,rvec(1)+0.2*(rvec(end)-rvec(1)),'Päivän keskilämpötila (°C)','fontsize',fsize2);
+title('April and July days 2015, 2016, 2017 ja 2019','fontsize',fsize2)
+t3 = text(cvec(1)-1.3*cstep,rvec(1)+0.2*(rvec(end)-rvec(1)),'Avg. daily temp. (°C)','fontsize',fsize2);
 set(t3,'rotation',90)
-text(cvec(1)+0.3*(cvec(end)-cvec(1)),rvec(1)-1.2*rstep,'Ilmanpaine (hPa)','fontsize',fsize2)
+text(cvec(1)+0.3*(cvec(end)-cvec(1)),rvec(1)-1.2*rstep,'Atm. pressure (hPa)','fontsize',fsize2)
 % Axis settings
 axis off
 pbaspect([1.7 1 1])

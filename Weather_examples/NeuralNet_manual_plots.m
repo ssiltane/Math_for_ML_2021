@@ -68,19 +68,19 @@ p1 = plot(ones(1,len)+separ*[0:(len-1)]/len,w01y19(:,6),'bo','markersize',msize)
 hold on
 set(p1,'color',color_winter)
 set(p1,'markerfacecolor',color_winter)
-t1 = text(1.5,-15,'Tammikuu','fontsize',fsize);
+t1 = text(1.5,-15,'January','fontsize',fsize);
 set(t1,'color',color_winter)
 %
 len = length(w07y19(:,6));
 p1 = plot(3*ones(1,len)+separ*[0:(len-1)]/len,w07y19(:,6),'bd','markersize',msize);
 set(p1,'color',color_summer)
 set(p1,'markerfacecolor',color_summer)
-t1 = text(3.4,max(w07y19(:,6)),'Heinäkuu','fontsize',fsize);
+t1 = text(3.4,max(w07y19(:,6)),'July','fontsize',fsize);
 set(t1,'color',color_summer)
 %
 axis([0 6 -20 30])
-title('Ilmatieteen laitos: Kumpula 2019','fontsize',fsize)
-ylabel('Päivän keskilämpötila (°C)','fontsize',fsize)
+title('weather Institute: Kumpula 2019','fontsize',fsize)
+ylabel('Avg. daily temp. (°C)','fontsize',fsize)
 set(gca,'xtick','')
 set(gca,'ytick',[-25:5:30],'fontsize',tickfsize)
 
@@ -104,19 +104,19 @@ p1 = plot(w04y19(:,3),w04y19(:,6),'bs','markersize',msize);
 hold on
 set(p1,'color',color_spring)
 set(p1,'markerfacecolor',color_spring)
-t1 = text(70,-6,'Huhtikuu','fontsize',fsize);
+t1 = text(70,-6,'April','fontsize',fsize);
 set(t1,'color',color_spring)
 %
 len = length(w07y19(:,6));
 p1 = plot(w07y19(:,3),w07y19(:,6),'bd','markersize',msize);
 set(p1,'color',color_summer)
 set(p1,'markerfacecolor',color_summer)
-t1 = text(80,25,'Heinäkuu','fontsize',fsize);
+t1 = text(80,25,'July','fontsize',fsize);
 set(t1,'color',color_summer)
 %
-title('Ilmatieteen laitos: Kumpula 2019','fontsize',fsize)
-ylabel('Päivän keskilämpötila (°C)','fontsize',fsize)
-xlabel('Suhteellinen ilmankosteus (%)','fontsize',fsize)
+title('weather Institute: Kumpula 2019','fontsize',fsize)
+ylabel('Avg. daily temp. (°C)','fontsize',fsize)
+xlabel('Relative humidity (%)','fontsize',fsize)
 set(gca,'xtick',[0:10:100],'fontsize',tickfsize)
 set(gca,'ytick',[-40:5:30],'fontsize',tickfsize)
 axis([30 100 -10 30])
@@ -134,19 +134,19 @@ p1 = plot(w04y19(:,2),w04y19(:,6),'bs','markersize',msize);
 hold on
 set(p1,'color',color_spring)
 set(p1,'markerfacecolor',color_spring)
-t1 = text(1010,-6,'Huhtikuu','fontsize',fsize);
+t1 = text(1010,-6,'April','fontsize',fsize);
 set(t1,'color',color_spring)
 %
 len = length(w07y19(:,6));
 p1 = plot(w07y19(:,2),w07y19(:,6),'bd','markersize',msize);
 set(p1,'color',color_summer)
 set(p1,'markerfacecolor',color_summer)
-t1 = text(995,25,'Heinäkuu','fontsize',fsize);
+t1 = text(995,25,'July','fontsize',fsize);
 set(t1,'color',color_summer)
 %
-title('Ilmatieteen laitos: Kumpula 2019','fontsize',fsize)
-ylabel('Päivän keskilämpötila (°C)','fontsize',fsize)
-xlabel('Ilmanpaine (hPa)','fontsize',fsize)
+title('weather Institute: Kumpula 2019','fontsize',fsize)
+ylabel('Avg. daily temp. (°C)','fontsize',fsize)
+xlabel('Atm. pressure (hPa)','fontsize',fsize)
 set(gca,'xtick',[990:10:1040],'fontsize',tickfsize)
 set(gca,'ytick',[-40:5:30],'fontsize',tickfsize)
 axis([990 1040 -10 30])
@@ -164,14 +164,14 @@ p1 = plot(w04y19(:,2),w04y19(:,6),'bs','markersize',msize);
 hold on
 set(p1,'color',color_spring)
 set(p1,'markerfacecolor',color_spring)
-t1 = text(1010,-6,'Huhtikuu','fontsize',fsize);
+t1 = text(1010,-6,'April','fontsize',fsize);
 set(t1,'color',color_spring)
 %
 len = length(w07y19(:,6));
 p1 = plot(w07y19(:,2),w07y19(:,6),'bd','markersize',msize);
 set(p1,'color',color_summer)
 set(p1,'markerfacecolor',color_summer)
-t1 = text(995,25,'Heinäkuu','fontsize',fsize);
+t1 = text(995,25,'July','fontsize',fsize);
 set(t1,'color',color_summer)
 %
 % Plot line providing approximate classification
@@ -185,9 +185,9 @@ set(t3,'rotation',360*atan(.8)/(2*pi))
 % t3 = text(991,-3,' y = 0.8x-798','fontsize',fsize);
 % set(t3,'rotation',360*atan(.8)/(2*pi))
 %
-title('Ilmatieteen laitos: Kumpula 2019','fontsize',fsize)
-ylabel('Päivän keskilämpötila (°C)','fontsize',fsize)
-xlabel('Ilmanpaine (hPa)','fontsize',fsize)
+title('weather Institute: Kumpula 2019','fontsize',fsize)
+ylabel('Avg. daily temp. (°C)','fontsize',fsize)
+xlabel('Atm. pressure (hPa)','fontsize',fsize)
 set(gca,'xtick',[990:10:1040],'fontsize',tickfsize)
 set(gca,'ytick',[-40:5:30],'fontsize',tickfsize)
 axis([990 1040 -10 30])
@@ -240,20 +240,20 @@ len = length(w04y19(:,6));
 p1 = plot(w04y19(:,2),w04y19(:,6),'bs','markersize',msize2);
 set(p1,'color',color_spring)
 set(p1,'markerfacecolor',color_spring)
-t1 = text(1010,-6,'Huhtikuu','fontsize',fsize2);
+t1 = text(1010,-6,'April','fontsize',fsize2);
 set(t1,'color',color_spring)
 %
 len = length(w07y19(:,6));
 p1 = plot(w07y19(:,2),w07y19(:,6),'bd','markersize',msize2);
 set(p1,'color',color_summer)
 set(p1,'markerfacecolor',color_summer)
-t1 = text(995,25,'Heinäkuu','fontsize',fsize2);
+t1 = text(995,25,'July','fontsize',fsize2);
 set(t1,'color',color_summer)
 %
-title('Ilmatieteen laitos: Kumpula 2019','fontsize',fsize2)
-t3 = text(cvec(1)-1.3*cstep,rvec(1)+0.2*(rvec(end)-rvec(1)),'Päivän keskilämpötila (°C)','fontsize',fsize2);
+title('weather Institute: Kumpula 2019','fontsize',fsize2)
+t3 = text(cvec(1)-1.3*cstep,rvec(1)+0.2*(rvec(end)-rvec(1)),'Avg. daily temp. (°C)','fontsize',fsize2);
 set(t3,'rotation',90)
-text(cvec(1)+0.3*(cvec(end)-cvec(1)),rvec(1)-1.2*rstep,'Ilmanpaine (hPa)','fontsize',fsize2)
+text(cvec(1)+0.3*(cvec(end)-cvec(1)),rvec(1)-1.2*rstep,'Atm. pressure (hPa)','fontsize',fsize2)
 axis off
 pbaspect([1.7 1 1])
 
@@ -293,20 +293,20 @@ len = length(w04y17(:,6));
 p1 = plot(w04y17(:,2),w04y17(:,6),'bs','markersize',msize2);
 set(p1,'color',color_spring)
 set(p1,'markerfacecolor',color_spring)
-t1 = text(1010,-6,'Huhtikuu','fontsize',fsize2);
+t1 = text(1010,-6,'April','fontsize',fsize2);
 set(t1,'color',color_spring)
 %
 len = length(w07y17(:,6));
 p1 = plot(w07y17(:,2),w07y17(:,6),'bd','markersize',msize2);
 set(p1,'color',color_summer)
 set(p1,'markerfacecolor',color_summer)
-t1 = text(995,25,'Heinäkuu','fontsize',fsize2);
+t1 = text(995,25,'July','fontsize',fsize2);
 set(t1,'color',color_summer)
 %
-title('Ilmatieteen laitos: Kumpula 2017','fontsize',fsize2)
-t3 = text(cvec(1)-1.3*cstep,rvec(1)+0.2*(rvec(end)-rvec(1)),'Päivän keskilämpötila (°C)','fontsize',fsize2);
+title('weather Institute: Kumpula 2017','fontsize',fsize2)
+t3 = text(cvec(1)-1.3*cstep,rvec(1)+0.2*(rvec(end)-rvec(1)),'Avg. daily temp. (°C)','fontsize',fsize2);
 set(t3,'rotation',90)
-text(cvec(1)+0.3*(cvec(end)-cvec(1)),rvec(1)-1.2*rstep,'Ilmanpaine (hPa)','fontsize',fsize2)
+text(cvec(1)+0.3*(cvec(end)-cvec(1)),rvec(1)-1.2*rstep,'Atm. pressure (hPa)','fontsize',fsize2)
 axis off
 pbaspect([1.7 1 1])
 
