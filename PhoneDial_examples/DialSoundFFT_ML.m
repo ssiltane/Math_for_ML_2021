@@ -60,7 +60,7 @@ predict(svm1,(s7mat(:,(Ntrain1+1):end)).')
 %% Train Support Vector Machine (SVM) with *FFT* data (good idea)
 
 % Use 2*Ntrain samples of the data to train an SVM
-Ntrain = 1;
+Ntrain = 5;
 X = [abs(Fs3mat(:,1:Ntrain)).';abs(Fs7mat(:,1:Ntrain)).'];
 Y = [3*ones(Ntrain,1);7*ones(Ntrain,1)];
 svm = fitcsvm(X,Y);
@@ -70,23 +70,4 @@ predict(svm,abs(Fs3mat(:,(Ntrain+1):end)).')
 predict(svm,abs(Fs7mat(:,(Ntrain+1):end)).') 
 
 
-
-%% Test the SVM with sound data recorded with a different instrument
-
-% Load the sounds
-load twosoundsB s3 s7 
-s3B = s3(1:N);
-s7B = s7(1:N);
-
-% Fast Fourier transform applied to columns
-Fs3B = fftshift(fft(s3B));
-Fs7B = fftshift(fft(s7B));
-
-% Crop the FFTs
-Fs3B = Fs3B(ind1:ind2);
-Fs7B = Fs7B(ind1:ind2);
-
-% See how the svm performs with the remaining samples
-predict(svm,abs(Fs3B)) 
-predict(svm,abs(Fs7B)) 
 

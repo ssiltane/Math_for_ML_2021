@@ -4,15 +4,22 @@
 
 % Read in the sounds and crop them
 [s3,sf] = audioread('data/Numero3.m4a');
+time3=(1:size(s3))/sf;
 figure(3)
 clf
-plot(s3)
-s3 = s3(130000:160000);
+plot(s3);
+title('number 3 sound signal')
+% extract only the first column
+s3 = s3(130000:160000,1);
+
 [s7,sf] = audioread('data/Numero7.m4a');
+time7=(1:size(s7))/sf;
 figure(7)
 clf
-plot(s7)
-s7 = s7(130000:160000);
+plot(s7);
+title('number 7 sound signal')
+% extract only the first column
+s7 = s7(130000:160000,1);
 
 % Listen to the sounds
 sound(s3,sf)
@@ -40,6 +47,8 @@ hold on
 plot(abs(Fs7),'b')
 axis square
 xlim([1 length(Fs3)])
+title('FFT of the signals')
+legend('Number 3', 'Number 7')
 
 %% Save results to file
 

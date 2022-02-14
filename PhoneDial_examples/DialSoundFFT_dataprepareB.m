@@ -12,10 +12,11 @@ clf
 plot(s)
 
 % Pick out the signals
-s3 = s(535000:570000);
-s7 = s(660000:695000);
+% extract only the first column
+s3 = s(535000:570000,1);
+s7 = s(660000:695000,1);
 
-% Hear the the sounds
+% Hear the sounds
 sound(s3,sf)
 pause(1)
 sound(s7,sf)
@@ -23,7 +24,7 @@ sound(s7,sf)
 % Calculate the fft
 fs3 = fft(s3);
 fs3 = fftshift(fs3);
-figure(1)
+figure(2)
 clf
 plot(abs(fs3))
 xlim([1 length(s3)])
