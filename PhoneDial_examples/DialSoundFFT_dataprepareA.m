@@ -30,25 +30,28 @@ sound(s7,sf)
 %% Calculate FFT and plot
 
 % Calculate FFT
-Fs3 = fftshift(fft(s3));
-Fs7 = fftshift(fft(s7));
+shiftFFT=true;
+[Fs3,freq3] = easyFFT(s3,sf,shiftFFT);
+[Fs7,freq7] = easyFFT(s7,sf,shiftFFT);
 
 % Crop the FFTs
 ind1 = round(.45*length(Fs3));
 ind2 = round(.55*length(Fs3));
 Fs3 = Fs3(ind1:ind2);
 Fs7 = Fs7(ind1:ind2);
+freq3 = freq3(ind1:ind2);
+freq7 = freq7(ind1:ind2);
 
 % Plot
 figure(30)
 clf
-plot(abs(Fs3),'r')
+plot(freq3,abs(Fs3),'r')
 hold on
-plot(abs(Fs7),'b')
+plot(freq3,abs(Fs7),'b')
 axis square
-xlim([1 length(Fs3)])
 title('FFT of the signals')
-legend('Number 3', 'Number 7')
+legend('Number 3', 'Number 7');
+xlabel('freq (Hz)')
 
 %% Save results to file
 

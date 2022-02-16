@@ -9,7 +9,7 @@ load data/tensounds_matrices s1mat s2mat s3mat s4mat s5mat s6mat s7mat s8mat s9m
 
 
 % Build a matrix containing samples of training data as columns
-Ntrain = 5;
+Ntrain = 5; % How many samples of each dial tone to use
 X = [s1mat(:,1:Ntrain),s2mat(:,1:Ntrain),s3mat(:,1:Ntrain),s4mat(:,1:Ntrain),s5mat(:,1:Ntrain),s6mat(:,1:Ntrain),s7mat(:,1:Ntrain),s8mat(:,1:Ntrain),s9mat(:,1:Ntrain),s0mat(:,1:Ntrain)];
 
 % Build a big matrix containing samples of all the data as columns

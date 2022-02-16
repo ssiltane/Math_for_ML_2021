@@ -10,7 +10,7 @@ figure(1)
 clf
 plot(s)
 
-% Pick out the signals
+% Pick out the signals. extract only the first column
 len=40000;
 s1 = s(160000+[1:len],1);
 s2 = s(245000+[1:len],1);

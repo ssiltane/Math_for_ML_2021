@@ -12,28 +12,27 @@ clf
 plot(s)
 
 % Calculate the fft
-fs = fft(s);
-fs = fftshift(fs);
+shiftFFT=true;
+[fs,freq] = easyFFT(s,sf,shiftFFT);
 
 % Filter the speech signal
+cutoffFreq=2000; % value in Hz
 modfs = fs;
-n = (length(s)-1)/2;
-tmp = [-n:n];
 % Low-pass filter
-modfs(abs(tmp)>n/20) = 0;
+modfs(abs(freq)>cutoffFreq) = 0;
 % High-pass filter
-%modfs(abs(tmp)<n/20) = 0;
+%modfs(abs(freq)<cutoffFreq) = 0;
 s2 = real(ifft(fftshift(modfs)));
 
 % Take a look
 figure(1)
 clf
 subplot(2,1,1)
-plot(abs(fs))
-xlim([1 length(s)])
+plot(freq,abs(fs))
+xlabel('frequency (Hz)')
 subplot(2,1,2)
-plot(abs(modfs))
-xlim([1 length(s)])
+plot(freq,abs(modfs))
+xlabel('frequency (Hz)')
 
 % Hear the original sound and modified sound
 sound(s,sf)

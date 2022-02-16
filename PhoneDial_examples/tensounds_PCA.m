@@ -7,11 +7,11 @@ fsize = 16;
 msize = 20;
 msize2 = 8;
 
-% Load data that was prepared in the routine DialSoundFFT_dataprepareC.m
+% Load data prepared by routine DialSoundFFT_dataprepareC.m
 load data/tensounds_matrices s1mat s2mat s3mat s4mat s5mat s6mat s7mat s8mat s9mat s0mat sf N K
 
 % Build a matrix containing samples of training data as columns
-Ntrain = 5; % How many samples of each dial tone to use
+Ntrain = 10; % How many samples of each dial tone to use
 X = [s1mat(:,1:Ntrain),s2mat(:,1:Ntrain),s3mat(:,1:Ntrain),s4mat(:,1:Ntrain),s5mat(:,1:Ntrain),s6mat(:,1:Ntrain),s7mat(:,1:Ntrain),s8mat(:,1:Ntrain),s9mat(:,1:Ntrain),s0mat(:,1:Ntrain)];
 
 % Build a big matrix containing samples of all the data as columns
@@ -50,7 +50,9 @@ for iii = 1:10
     set(gca,'yticklabel',{})
     box off
     pbaspect([8 1 1])
+    ylabel(sprintf('%d',mod(iii,10)),"FontSize",16)
 end
+hold off;
 
 % figure(2)
 % clf
@@ -70,9 +72,9 @@ S = S/size(FX,2);
 [V,D] = eig(S);
 
 % Normalize training data so that it becomes zero-mean and unit-variance
-dataMEAN = mean(FX.').';
+dataMEAN = mean(FX,2);
 FX2 = FX-repmat(dataMEAN,1,size(FX,2));
-dataSTD = std(FX2.').';
+dataSTD = std(FX2,0,2);
 FX2 = FX2./repmat(dataSTD,1,size(FX2,2));
 
 % Calculate the eigenvalues and eigenvectors of the normalized data
@@ -87,7 +89,12 @@ FXall2 = FXall-repmat(dataMEAN,1,size(FXall,2));
 FXall2 = FXall2./repmat(dataSTD,1,size(FXall2,2));
 
 
-%% Dimension reduction, version 1: Three most dominant dimensions
+%% Dimension reduction: Three most dominant dimensions non-normalized data
+
+% plot the eigenvalues 
+figure(3)
+semilogy(diag(D))
+title('eigenvalues (non-normalized data)');
 
 % Pick three most dominant eigenvectors (non-normalized PCA)
 % note the largest elements in D is the last components.
@@ -96,8 +103,15 @@ B = V(:,(end-2):end);
 % Project the data onto the subspace spanned by the dominant eigenvectors
 tmp1 = B.'*FXall;
 
-plot3_Digits(10,reshape(tmp1,3,K,10))
+plot3_Digits(4,reshape(tmp1,3,K,10))
 title('Three dominant PCA dimensions, data not normalized','fontsize',fsize)
+
+%% Dimension reduction: Three most dominant dimensions normalized data
+
+% plot the eigenvalues 
+figure(5)
+semilogy(diag(D2))
+title('eigenvalues (normalized data)')
 
 % Pick three most dominant eigenvectors from normalized PCA
 B2 = V2(:,(end-2):end);
@@ -105,7 +119,7 @@ B2 = V2(:,(end-2):end);
 % Project the normalized data onto the subspace spanned by the dominant eigenvectors
 tmp2 = B2.'*FXall2;
 
-plot3_Digits(11,reshape(tmp2,3,K,10))
+plot3_Digits(6,reshape(tmp2,3,K,10))
 title('Three dominant PCA dimensions, normalized data','fontsize',fsize)
 
 
@@ -126,6 +140,26 @@ tmp4 = B4.'*FXall2;
 plot3_Digits(13,reshape(tmp4,3,K,10))
 title('4th-6th PCA dimensions, normalized data','fontsize',fsize)
 
+%% test k-means clustering (with PCA)
+% lets to classify all 10 digits using PCA. Try running this many times,
+% and you see that sometimes k-means perform better, but still it is not
+% perfect 
+M=6;  % number of principal components
+B = V2(:,(end-(M-1)):end);
+z=B.'*FXall2;
 
+[clusters_FFT,centers] = kmeans(z.',10);
+result1 = reshape(clusters_FFT,[19,10]);
+disp(result1)
+
+
+%% test k-means clustering (NO PCA)
+
+% first, let's cluster the FFT data in the matrix FX. We can see that the
+% FFT is enough to correctly classify the digits. Actually the FFT is the
+% 'perfect' preprocessing for this problem.
+[clusters_FFT,centers] = kmeans(FXall.',10);
+result1 = reshape(clusters_FFT,[19,10]);
+disp(result1)
 
 
