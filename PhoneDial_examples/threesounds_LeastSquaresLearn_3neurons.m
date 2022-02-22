@@ -101,10 +101,10 @@ Y=[y1;y5;y9];
 % Least square equation
 
 % |  [ FFT_1^T ]  1  |   |  [     ]  |   |  [  ~y_1  ]  |
-% |  [ FFT_2^T ]  1  |   |  [ A^T ]  |   |  [  ~y_1  ]  |
+% |  [ FFT_2^T ]  1  |   |  [ A^T ]  |   |  [  ~y_2  ]  |
 % |       ...        | * |  [     ]  | = |      ...     |
 % |       ...        |   |  [     ]  |   |      ...     |
-% |  [ FFT_N^T ]  1  |   |    b^T    |   |  [  ~y_N  ]  |
+% |  [ FFT_N^T ]  1  |   |  [ b^T ]  |   |  [  ~y_N  ]  |
 %
 % where  ~y_i = S^{-1}(y_i)
 %
@@ -125,7 +125,7 @@ A=P(1:end-1,:)';
 b=P(end,:)';
 
 %% Check the result visually
-figure(1)
+figure(2)
 clf
 hold on
 
@@ -147,6 +147,7 @@ for ii=1:size(FXall,2)
         color='bp';
     end
     plot3(y(1),y(2),y(3),color)
+    title('red: 1 / blue: 5 / black: 9')
 end
 
 
