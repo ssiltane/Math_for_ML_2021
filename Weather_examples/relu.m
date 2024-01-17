@@ -1,7 +1,5 @@
-% Simple RELU implementation
-%
-% Samuli Siltanen Sep 2020
+function y = relu(x)
 
-function res = relu(x)
+    y = max(0,x);
+end
 
-res = max(0,x);
