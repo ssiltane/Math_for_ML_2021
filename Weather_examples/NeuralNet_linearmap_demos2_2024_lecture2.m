@@ -25,6 +25,8 @@ color_winter = [0 0 255]/255;
 color_spring = [20 200 185]/255;
 msize = 6;
 
+% Load precomputed neural net weights and biases.
+load data/NN_parameters W2 b2 W3 b3 W4 b4
 
 %% Picture 1, April and July normalized temperatures and air pressures in 
 % 2015 - 2019
@@ -51,9 +53,6 @@ axis square
 title('Normalized data points (2019)')
 
 %% Picture 2, apply weight matrix and bias of first hidden layer
-
-% Load precomputed neural net weights and biases.
-load data/NN_parameters W2 b2
 
 % Re-arrange the data so that each column of a 2x60 matrix has the
 % x1-coordinate of a data point in the first row and x2-coordinate in the

@@ -1,6 +1,4 @@
-% ReLU activation function implementation
-%
-% Siiri Rautio
+% Sigmoid activation function implementation
 
 function y = sigmoid(x)
 
