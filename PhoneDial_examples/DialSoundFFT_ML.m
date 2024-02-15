@@ -1,6 +1,5 @@
 % Divide phone dial sounds into several samples
-%
-% Samuli Siltanen Feb 2021
+
 
 %% Put data snippets into matrices
 
@@ -14,21 +13,20 @@ K = floor(len/N);
 s3mat = zeros(N,K);
 s7mat = zeros(N,K);
 
-% Chop the original signals into K snippets, each stored as one column in
+%% Chop the original signals into K snippets, each stored as one column in
 % the corresponding matrix
 for iii = 1:K
     s3mat(:,iii) = s3((iii-1)*N+[1:N]);
     s7mat(:,iii) = s7((iii-1)*N+[1:N]);
 end
 
-% Plot
+%% Plot
 figure(1)
 clf
 plot(s3mat,'r')
 hold on
 plot(s7mat,'b')
 axis square
-xlim([1 size(Fs3mat,1)])
 title('Signal snippets (3: red, 7:blue)');
 
 %% Calculate FFTs
@@ -63,7 +61,7 @@ Y = [3*ones(Ntrain1,1);7*ones(Ntrain1,1)];
 svm1 = fitcsvm(X,Y);
 
 % See how the svm performs with the remaining samples
-predict3 = predict(svm1,(s3mat(:,(Ntrain1+1):end)).') 
+predict3 = predict(svm1,(s3mat(:,(Ntrain1+1):end)).');
 predict7 = predict(svm1,(s7mat(:,(Ntrain1+1):end)).') 
 
 
